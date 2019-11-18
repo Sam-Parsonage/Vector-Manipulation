@@ -1,0 +1,159 @@
+using System;
+
+class MainClass 
+{
+  public static void Main (string[] args) 
+  {
+
+    // example to create two vectors
+    Vector first = new Vector(4,9);
+    Vector second = new Vector(8,4);
+
+    // example print out the vectors
+    first.printVector();
+    second.printVector();
+    Console.WriteLine(VectorLength(first));
+    Console.WriteLine(DotProduct(first, second));
+    Console.WriteLine(angleBetween(first, second));
+    Vector answer = MultVectors(second,3);
+    answer.printVector();
+    for (double i=0; i <1; i = i +0.1 )
+    {
+      Console.WriteLine("\u03b1 is {0}", i);
+      Console.WriteLine("\u03b2 is {0}", Math.Round(1 - i, 1));
+      convexCombination(first, second, i).printVector();
+    }
+  }
+
+public static Vector convexCombination( Vector first, Vector second, double scalarMult1 )
+  // method to take two vectors and return a convex combination vector
+  {
+
+      double scalarMult2 = 1 - scalarMult1;
+      
+      Vector Multfirst = MultVectors(first, scalarMult1);
+      Vector Multsecond = MultVectors(second, scalarMult2);
+      Vector result = addVectors(Multfirst, Multsecond);
+
+      return result;
+  }
+
+  public static double angleBetween( Vector first, Vector second )
+  // method to take two vectors and return the angle between them
+  {
+
+
+    double topProduct = DotProduct(first, second);
+    double bottomProduct = VectorLength(first)*VectorLength(second);
+    double AngleRad = Math.Acos(topProduct/bottomProduct);
+    double AngleDeg = AngleRad * (180 / Math.PI);
+    return AngleDeg;
+
+  }
+
+  public static Vector addVectors( Vector first, Vector second )
+  // method to take two vectors and return the addition result
+  {
+      Vector result = new Vector(0,0);
+      double xTotal = first.getX() + second.getX();
+      double yTotal = first.getY() + second.getY();
+      result.setX(xTotal);
+      result.setY(yTotal);
+      return result;
+  }
+  
+    public static Vector subVectors( Vector first, Vector second )
+  // method to take two vectors and return the subtracted result
+  {
+      Vector result = new Vector(0,0);
+
+      double xTotal = first.getX() - second.getX();
+      double yTotal = first.getY() - second.getY();
+      result.setX(xTotal);
+      result.setY(yTotal);
+      return result;
+  }
+  
+ 
+
+
+
+      public static Vector MultVectors( Vector first, double Scalar )
+  // method to take a vector and a scalar and return the multiplied vector
+  {
+      Vector result = new Vector(0,0);
+      double xTotal = (first.getX())*Scalar;
+      double yTotal = (first.getY())*Scalar;
+      result.setX(xTotal);
+      result.setY(yTotal);
+      return result;
+  }
+
+
+
+      public static double VectorLength( Vector first )
+  // method to take a vector and return the length of the vector
+  {
+      double sum = Math.Pow(first.getX(),2) + Math.Pow(first.getY(), 2);
+      double result = Math.Sqrt(sum);
+      return result;
+  }
+
+      public static double DotProduct( Vector first , Vector second)
+  // method to take two vectors and return the dot product
+  {
+    double XProduct = first.getX() * second.getX();
+    double YProduct = first.getY() * second.getY();
+    double result = XProduct + YProduct;
+      return result;
+  }
+}
+
+class Vector {
+      // 2d vector class
+
+      // create private x and y properties
+      private double x;   
+      private double y;  
+
+      // constructor method 
+      public Vector(double x, double y)
+      {
+          this.x = x;
+          this.y = y;
+      }
+
+      // set method to change vector X
+      public void setX( double x) 
+      {
+          this.x = x;
+      }
+      
+      // set method to change vector Y
+      public void setY( double y) 
+      {
+          this.y = y;
+      }
+      // get methiod for X
+      public double getX ()
+      {
+          return this.x;
+      }
+
+      // get method for Y
+      public double getY ()
+      {
+          return this.y;
+      }
+      // method to out the vector
+      public void printVector() 
+      {
+         Console.WriteLine("Vector is ( {0} , {1} )",this.x,this.y);
+      }
+
+}
+
+
+
+
+
